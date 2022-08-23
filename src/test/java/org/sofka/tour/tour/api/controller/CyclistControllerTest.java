@@ -48,7 +48,7 @@ class CyclistControllerTest {
                 .build();
 
         Team team = Team.builder()
-                .codeTeam("123456789")
+                .codeTeam("525")
                 .name("Movistar")
                 .idCountry("456")
                 .build();
@@ -58,10 +58,10 @@ class CyclistControllerTest {
                 .id("123")
                 .name("Juan Amaya")
                 .idCountry("456")
-                .idTeam("123456789")
+                .idTeam("525")
                 .build();
 
-        cyclistService.saveCyclist(any(Cyclist.class));
+       when(cyclistService.saveCyclist(any(Cyclist.class))).thenReturn(Mono.just(cyclist));
 
         this.client.post().bodyValue(cyclist).exchange()
                 .expectStatus()

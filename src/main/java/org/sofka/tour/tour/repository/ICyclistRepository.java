@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 public interface ICyclistRepository extends ReactiveMongoRepository<Cyclist, String >,
         ReactiveQueryByExampleExecutor<Cyclist> {
 
-    @Query(value = "{}", fields = "{name}")
+
     Flux<Cyclist> findByIdCountry(String idCountry);
 
     Flux<Cyclist> findByIdTeam(String idConutry);
