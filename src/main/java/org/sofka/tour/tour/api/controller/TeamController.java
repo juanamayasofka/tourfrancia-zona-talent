@@ -44,7 +44,13 @@ public class TeamController {
         return teamService.deleteTeam(idTeam);
     }
 
-
+    /**
+     * EndPoint que permite buscar los equipos pertenecientes a un
+     * pais por medio del idCountry.
+     *
+     * @param idContry criterio de busqueda.
+     * @return flujo de teams.
+     */
     @GetMapping("/searchbycountry/{idContry}")
     public Flux<Team> getTeamtByCountry(@PathVariable String idContry) {
         return teamService.getTeamByCountry(idContry);

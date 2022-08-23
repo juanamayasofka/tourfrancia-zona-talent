@@ -34,11 +34,15 @@ public class CountryController {
         return countryService.getCountryById(idCountry);
     }
 
+    /**
+     * Endpoint que permite eliminar las ciudades por id
+     *
+     * @param idCountry de la ciudad a ser eliminada
+     * @return mono vacio.
+     */
     @DeleteMapping("/{idCountry}")
     public Mono<Void> deleteCountry(@PathVariable String idCountry){
-
         return countryService.deleteCountry(idCountry);
-
     }
 
 }

@@ -16,6 +16,15 @@ public class CyclistService {
         this.cyclistRepository = cyclistRepository;
     }
 
+    /**
+     * Metodo que permite guardar un registro de un ciclista, con la regla de negocio
+     * que los codigos no pueden ser mayores a 3. se hace un filter para que solo guarde
+     * los registros que cumplen el criterio, switchIfEmpty en caso contrario retorna un
+     * Mono vacio.
+     *
+     * @param cyclist hacer almacenado en BD
+     * @return Cyclist si fue almacenado, Mono<void> si no guardo.
+     */
     public Mono<Cyclist> saveCyclist(Cyclist cyclist){
         return Mono.just(cyclist)
                 .filter(cy -> cy.getId().length() <= 3 )
@@ -32,6 +41,13 @@ public class CyclistService {
         return cyclistRepository.findById(idCyclist);
     }
 
+    /**
+     * Metodo que permite consultar un ciclista por id,
+     * y en el mismo flujo eliminarlo.
+     *
+     * @param idCyclist hacer eliminado
+     * @return Mono vacio.
+     */
     public Mono<Void> deleteCyclist(String  idCyclist){
         return cyclistRepository.
                 findById(idCyclist).
