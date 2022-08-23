@@ -50,24 +50,56 @@ class CyclistControllerTest {
         Team team = Team.builder()
                 .codeTeam("123456789")
                 .name("Movistar")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         Cyclist cyclist = Cyclist.builder()
                 .numberCompetitor("123")
                 .id("123")
                 .name("Juan Amaya")
-                .country(country)
-                .team(team)
+                .idCountry("456")
+                .idTeam("123456789")
                 .build();
 
-        when(cyclistService.saveCyclist(any(Cyclist.class)).thenReturn(Mono.just(cyclist)));
+        cyclistService.saveCyclist(any(Cyclist.class));
 
         this.client.post().bodyValue(cyclist).exchange()
                 .expectStatus()
                 .isOk()
                 .expectBody(Cyclist.class)
                 .isEqualTo(cyclist);
+    }
+
+    @Test
+    void saveCyclistValidandoCodigoMenor3() {
+
+        Country country = Country.builder()
+                .code("Col")
+                .id("456")
+                .name("Colombia")
+                .build();
+
+        Team team = Team.builder()
+                .codeTeam("123456789")
+                .name("Movistar")
+                .idCountry("456")
+                .build();
+
+        Cyclist cyclist = Cyclist.builder()
+                .numberCompetitor("123456")
+                .id("123")
+                .name("Juan Amaya")
+                .idCountry("456")
+                .idTeam("123456789")
+                .build();
+
+        cyclistService.saveCyclist(any(Cyclist.class));
+
+        this.client.post().bodyValue(cyclist).exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(Cyclist.class)
+                .isEqualTo(null);
     }
 
     @Test
@@ -81,23 +113,23 @@ class CyclistControllerTest {
         Team team = Team.builder()
                 .codeTeam("123456789")
                 .name("Movistar")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         Cyclist cyclist = Cyclist.builder()
                 .numberCompetitor("123")
                 .id("123")
                 .name("Juan Amaya")
-                .country(country)
-                .team(team)
+                .idCountry("456")
+                .idTeam("123456789")
                 .build();
 
         Cyclist cyclist1 = Cyclist.builder()
                 .numberCompetitor("321")
                 .id("321")
                 .name("Alejandra Vargas")
-                .country(country)
-                .team(team)
+                .idCountry("456")
+                .idTeam("123456789")
                 .build();
 
         List<Cyclist> list = new ArrayList<>();
@@ -125,20 +157,20 @@ class CyclistControllerTest {
         Team team = Team.builder()
                 .codeTeam("123456789")
                 .name("Movistar")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         Cyclist cyclist = Cyclist.builder()
                 .numberCompetitor("123")
                 .id("123")
                 .name("Juan Amaya")
-                .country(country)
-                .team(team)
+                .idCountry("456")
+                .idTeam("123456789")
                 .build();
 
-        when(cyclistService.getCyclistById("123").thenReturn(Mono.just(cyclist)));
+        when(cyclistService.getCyclistById("123")).thenReturn(Mono.just(cyclist));
 
-        this.client.get().uri("/{123}").exchange()
+        this.client.get().uri("/123").exchange()
                 .expectStatus()
                 .isOk()
                 .expectBody(Cyclist.class)

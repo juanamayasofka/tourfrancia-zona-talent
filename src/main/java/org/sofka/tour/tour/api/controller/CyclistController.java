@@ -34,8 +34,18 @@ public class CyclistController {
 
     @DeleteMapping("/{idCyclist}")
     public Mono<Void> deleteCyclist(@PathVariable String idCyclist){
-        Cyclist cyclist = cyclistService.getCyclistById(idCyclist).block();
-        return cyclistService.deleteCyclist(cyclist);
+
+        return cyclistService.deleteCyclist(idCyclist);
+    }
+
+    @GetMapping("/searchbycountry/{idcountry}")
+    public Flux<Cyclist> getCyclistByCountry(@PathVariable String idcountry){
+        return cyclistService.getCyclistByCountry(idcountry);
+    }
+
+    @GetMapping("/searchbyteam/{idteam}")
+    public Flux<Cyclist> getCyclistByTeam(@PathVariable String idteam){
+        return cyclistService.getCyclistByTeam(idteam);
     }
 
 }

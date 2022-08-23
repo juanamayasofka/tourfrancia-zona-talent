@@ -41,9 +41,12 @@ public class TeamController {
 
     @DeleteMapping("/{idTeam}")
     public Mono<Void> deleteCyclist(@PathVariable String idTeam) {
-        Team team = teamService.getTeamById(idTeam).block();
-        return teamService.deleteTeam(team);
+        return teamService.deleteTeam(idTeam);
     }
 
 
+    @GetMapping("/searchbycountry/{idContry}")
+    public Flux<Team> getTeamtByCountry(@PathVariable String idContry) {
+        return teamService.getTeamByCountry(idContry);
+    }
 }

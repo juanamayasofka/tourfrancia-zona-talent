@@ -32,7 +32,14 @@ public class TeamService {
         return teamRepository.findById(idTeam);
     }
 
-    public Mono<Void> deleteTeam(Team team){
-        return teamRepository.delete(team);
+    public Mono<Void> deleteTeam(String idTeam){
+
+        return teamRepository.findById(idTeam)
+                .flatMap(teamRepository::delete);
     }
+
+    public Flux<Team> getTeamByCountry(String idCountry){
+        return teamRepository.findByIdCountry(idCountry);
+    }
+
 }

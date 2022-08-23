@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Cyclist")
@@ -18,7 +19,7 @@ public class Cyclist {
     private String id;
     private String name;
     private String numberCompetitor;
-    private Team team;
-    private Country country;
+    private String idTeam;
+    private String idCountry;
 
 }

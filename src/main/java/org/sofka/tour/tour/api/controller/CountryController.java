@@ -36,8 +36,8 @@ public class CountryController {
 
     @DeleteMapping("/{idCountry}")
     public Mono<Void> deleteCountry(@PathVariable String idCountry){
-        Country country = countryService.getCountryById(idCountry).block();
-        return countryService.deleteCountry(country);
+
+        return countryService.deleteCountry(idCountry);
 
     }
 

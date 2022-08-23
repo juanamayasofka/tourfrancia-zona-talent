@@ -48,7 +48,7 @@ class TeamControllerTest {
         Team team = Team.builder()
                 .codeTeam("123456789")
                 .name("Movistar")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         teamService.saveTeam(any(Team.class));
@@ -74,7 +74,7 @@ class TeamControllerTest {
         Team team = Team.builder()
                 .codeTeam("123")
                 .name("Movistar")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         teamService.saveTeam(any(Team.class));
@@ -97,13 +97,13 @@ class TeamControllerTest {
         Team team = Team.builder()
                 .codeTeam("123")
                 .name("Movistar")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         Team team2 = Team.builder()
                 .codeTeam("321")
                 .name("Astana")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         List<Team> list = new ArrayList<>();
@@ -131,7 +131,7 @@ class TeamControllerTest {
         Team team = Team.builder()
                 .codeTeam("123")
                 .name("Movistar")
-                .country(country)
+                .idCountry("456")
                 .build();
 
         when(teamService.getTeamById("123")).thenReturn(Mono.just(team));

@@ -16,7 +16,7 @@ public class Team {
     @NonNull
     private String codeTeam;
     private String name;
-    private Country country;
+    private String idCountry;
 
 
 }

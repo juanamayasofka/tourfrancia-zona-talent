@@ -30,7 +30,9 @@ public class CountryService {
         return countryRespository.findById(idCountry);
     }
 
-    public Mono<Void> deleteCountry(Country country){
-        return countryRespository.delete(country);
+    public Mono<Void> deleteCountry(String country){
+
+        return countryRespository.findById(country)
+                .flatMap(countryRespository::delete);
     }
 }

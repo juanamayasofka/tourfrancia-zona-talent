@@ -17,8 +17,9 @@ public class CyclistService {
     }
 
     public Mono<Cyclist> saveCyclist(Cyclist cyclist){
-        return Mono.just(cyclist).filter(cy -> Integer.parseInt(cy.getNumberCompetitor()) <= 3 )
-                .filter(cyclist1 ->  cyclist1.getNumberCompetitor().chars().allMatch(Character::isDigit))
+        return Mono.just(cyclist)
+                .filter(cy -> cy.getId().length() <= 3 )
+                .filter(cyclist1 ->  cyclist1.getId().chars().allMatch(Character::isDigit))
                 .flatMap(cyclistRepository::save)
                 .switchIfEmpty(Mono.empty());
     }
@@ -31,7 +32,18 @@ public class CyclistService {
         return cyclistRepository.findById(idCyclist);
     }
 
-    public Mono<Void> deleteCyclist(Cyclist cyclist){
-        return cyclistRepository.delete(cyclist);
+    public Mono<Void> deleteCyclist(String  idCyclist){
+        return cyclistRepository.
+                findById(idCyclist).
+                flatMap(cyclistRepository::delete);
+
+    }
+
+    public Flux<Cyclist> getCyclistByCountry(String idConutry){
+        return cyclistRepository.findByIdCountry(idConutry);
+    }
+
+    public Flux<Cyclist> getCyclistByTeam(String idConutry){
+        return cyclistRepository.findByIdTeam(idConutry);
     }
 }
