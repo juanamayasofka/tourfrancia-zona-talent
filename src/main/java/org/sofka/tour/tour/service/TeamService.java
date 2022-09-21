@@ -29,6 +29,7 @@ public class TeamService {
      */
     public Mono<Team> saveTeam(Team team){
        return Mono.just(team).filter(team1 -> team1.getCodeTeam().length() <= 3)
+
                .flatMap(teamRepository::save)
                .switchIfEmpty(Mono.empty());
     }

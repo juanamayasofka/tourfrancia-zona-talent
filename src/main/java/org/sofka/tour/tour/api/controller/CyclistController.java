@@ -2,6 +2,8 @@ package org.sofka.tour.tour.api.controller;
 
 import org.sofka.tour.tour.domain.Cyclist;
 import org.sofka.tour.tour.service.CyclistService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -18,24 +20,24 @@ public class CyclistController {
     }
 
     @PostMapping
-    public Mono<Cyclist> saveCyclist(@RequestBody Cyclist cyclist) {
-        return cyclistService.saveCyclist(cyclist);
+    public ResponseEntity<Mono<Cyclist>> saveCyclist(@RequestBody Cyclist cyclist) {
+        return new ResponseEntity<>(cyclistService.saveCyclist(cyclist), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public Flux<Cyclist> getAllCyclist(){
-        return cyclistService.getAllCyclists();
+    public ResponseEntity<Flux<Cyclist>> getAllCyclist(){
+        return new ResponseEntity<>( cyclistService.getAllCyclists(), HttpStatus.OK);
     }
 
     @GetMapping("/{idCyclist}")
-    public Mono<Cyclist> getCyclistById(@PathVariable String idCyclist){
-        return cyclistService.getCyclistById(idCyclist);
+    public ResponseEntity<Mono<Cyclist>> getCyclistById(@PathVariable String idCyclist){
+        return new ResponseEntity<>(cyclistService.getCyclistById(idCyclist),HttpStatus.OK);
     }
 
     @DeleteMapping("/{idCyclist}")
-    public Mono<Void> deleteCyclist(@PathVariable String idCyclist){
+    public ResponseEntity<Mono<Void>> deleteCyclist(@PathVariable String idCyclist){
 
-        return cyclistService.deleteCyclist(idCyclist);
+        return new ResponseEntity<>(cyclistService.deleteCyclist(idCyclist), HttpStatus.OK);
     }
 
     /**
@@ -46,8 +48,8 @@ public class CyclistController {
      * @return flujo con la lista de ciclistas pertenecientes a ese pais.
      */
     @GetMapping("/searchbycountry/{idcountry}")
-    public Flux<Cyclist> getCyclistByCountry(@PathVariable String idcountry){
-        return cyclistService.getCyclistByCountry(idcountry);
+    public ResponseEntity<Flux<Cyclist>> getCyclistByCountry(@PathVariable String idcountry){
+        return new ResponseEntity<>(cyclistService.getCyclistByCountry(idcountry), HttpStatus.OK);
     }
 
     /**
@@ -58,8 +60,8 @@ public class CyclistController {
      * @return flujo de datos con los ciclistas pertenecientes a ese equipo.
      */
     @GetMapping("/searchbyteam/{idteam}")
-    public Flux<Cyclist> getCyclistByTeam(@PathVariable String idteam){
-        return cyclistService.getCyclistByTeam(idteam);
+    public ResponseEntity<Flux<Cyclist>> getCyclistByTeam(@PathVariable String idteam){
+        return new ResponseEntity<>(cyclistService.getCyclistByTeam(idteam), HttpStatus.OK);
     }
 
 }

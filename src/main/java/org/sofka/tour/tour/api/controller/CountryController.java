@@ -3,6 +3,8 @@ package org.sofka.tour.tour.api.controller;
 import org.sofka.tour.tour.domain.Country;
 import org.sofka.tour.tour.domain.Cyclist;
 import org.sofka.tour.tour.service.CountryService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -20,18 +22,18 @@ public class CountryController {
     }
 
     @PostMapping
-    public Mono<Country> saveCountry(@RequestBody Country country) {
-        return countryService.saveCountry(country);
+    public ResponseEntity<Mono<Country>> saveCountry(@RequestBody Country country) {
+        return new ResponseEntity(countryService.saveCountry(country), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public Flux<Country> getAllCountry(){
-        return countryService.getAllCountry();
+    public ResponseEntity<Flux<Country>> getAllCountry(){
+        return new ResponseEntity<>( countryService.getAllCountry(), HttpStatus.OK);
     }
 
     @GetMapping("/search/{idCountry}")
-    public Mono<Country> getCountryById(@PathVariable String idCountry){
-        return countryService.getCountryById(idCountry);
+    public ResponseEntity<Mono<Country>> getCountryById(@PathVariable String idCountry){
+        return new ResponseEntity<>( countryService.getCountryById(idCountry), HttpStatus.OK);
     }
 
     /**
@@ -41,8 +43,8 @@ public class CountryController {
      * @return mono vacio.
      */
     @DeleteMapping("/{idCountry}")
-    public Mono<Void> deleteCountry(@PathVariable String idCountry){
-        return countryService.deleteCountry(idCountry);
+    public ResponseEntity<Mono<Void>> deleteCountry(@PathVariable String idCountry){
+        return new ResponseEntity<>(countryService.deleteCountry(idCountry), HttpStatus.OK);
     }
 
 }

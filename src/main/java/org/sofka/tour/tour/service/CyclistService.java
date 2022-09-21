@@ -6,6 +6,7 @@ import org.sofka.tour.tour.repository.ICyclistRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
 
 @Service
 public class CyclistService {
@@ -25,19 +26,23 @@ public class CyclistService {
      * @param cyclist hacer almacenado en BD
      * @return Cyclist si fue almacenado, Mono<void> si no guardo.
      */
-    public Mono<Cyclist> saveCyclist(Cyclist cyclist){
+    public Mono<Cyclist> saveCyclist(Cyclist cyclist) {
+
         return Mono.just(cyclist)
-                .filter(cy -> cy.getId().length() <= 3 )
-                .filter(cyclist1 ->  cyclist1.getId().chars().allMatch(Character::isDigit))
+                .filter(cy -> cy.getId().length() <= 3)
+                .filter(cyclist1 -> cyclist1.getId().chars().allMatch(Character::isDigit))
+                .zipWith(cyclistRepository.findByIdTeam(cyclist.getIdTeam()).collectList())
+                .filter(objects -> objects.getT2().size() < 9)
+                .map(Tuple2::getT1)
                 .flatMap(cyclistRepository::save)
                 .switchIfEmpty(Mono.empty());
     }
 
-    public Flux<Cyclist> getAllCyclists(){
+    public Flux<Cyclist> getAllCyclists() {
         return cyclistRepository.findAll();
     }
 
-    public Mono<Cyclist> getCyclistById(String idCyclist){
+    public Mono<Cyclist> getCyclistById(String idCyclist) {
         return cyclistRepository.findById(idCyclist);
     }
 
@@ -48,18 +53,18 @@ public class CyclistService {
      * @param idCyclist hacer eliminado
      * @return Mono vacio.
      */
-    public Mono<Void> deleteCyclist(String  idCyclist){
+    public Mono<Void> deleteCyclist(String idCyclist) {
         return cyclistRepository.
                 findById(idCyclist).
                 flatMap(cyclistRepository::delete);
 
     }
 
-    public Flux<Cyclist> getCyclistByCountry(String idConutry){
+    public Flux<Cyclist> getCyclistByCountry(String idConutry) {
         return cyclistRepository.findByIdCountry(idConutry);
     }
 
-    public Flux<Cyclist> getCyclistByTeam(String idConutry){
+    public Flux<Cyclist> getCyclistByTeam(String idConutry) {
         return cyclistRepository.findByIdTeam(idConutry);
     }
 }

@@ -177,8 +177,4 @@ class CyclistControllerTest {
                 .isEqualTo(cyclist);
 
     }
-
-    @Test
-    void deleteCyclist() {
-    }
 }
